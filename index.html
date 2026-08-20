@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — StudioPulse</title>
+<meta name="description" content="Privacy Policy for StudioPulse, a Chrome extension that provides on-device YouTube analytics. No data is ever sent to an external server." />
+<style>
+  :root {
+    --ink: #101114;
+    --ink-soft: #4a4d57;
+    --ink-faint: #8a8d99;
+    --paper: #fdfdfc;
+    --panel: #f4f4f2;
+    --line: #e6e6e3;
+    --studio-black: #08090a;
+    --tally: #ff4b2b;
+    --vu-green: #39ff88;
+    --max: 760px;
+    --radius: 10px;
+    font-size: 17px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--vu-green); color: var(--studio-black); }
+
+  a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--tally); }
+
+  /* ---------- Skip link ---------- */
+  .skip-link {
+    position: absolute; left: -999px; top: 0; z-index: 100;
+    background: var(--vu-green); color: var(--studio-black);
+    padding: 10px 16px; border-radius: 0 0 8px 0; font-weight: 600; font-size: 14px;
+  }
+  .skip-link:focus { left: 0; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(253,253,252,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 980px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 28px; height: 28px; border-radius: 8px; background: var(--studio-black);
+    display: flex; align-items: center; justify-content: center; flex: none;
+    position: relative;
+  }
+  .brand-mark svg { width: 16px; height: 16px; }
+  .brand-mark::after {
+    content: ""; position: absolute; top: 3px; right: 3px; width: 5px; height: 5px;
+    border-radius: 50%; background: var(--tally);
+  }
+  .brand-word { font-weight: 700; font-size: 15px; letter-spacing: 0.01em; }
+  .brand-word b { color: var(--tally); font-weight: 800; }
+  .topbar-tag {
+    font-size: 12.5px; color: var(--ink-faint); font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--studio-black); color: #f2f2f0;
+    padding: 64px 24px 56px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(57,255,136,0.10), transparent 45%),
+      radial-gradient(circle at 88% 80%, rgba(255,75,43,0.10), transparent 45%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 760px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--vu-green); margin-bottom: 18px;
+  }
+  .hero-eyebrow .rec-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--tally);
+    box-shadow: 0 0 0 3px rgba(255,75,43,0.18);
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4.4vw, 2.7rem); line-height: 1.12; margin: 0 0 14px;
+    letter-spacing: -0.015em; font-weight: 750;
+  }
+  .hero p.lead {
+    font-size: 17px; color: #c7c8c4; max-width: 58ch; margin: 0 0 26px;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px; color: #9a9c98;
+  }
+  .hero-meta span {
+    border: 1px solid rgba(255,255,255,0.14); border-radius: 999px;
+    padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .hero-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--vu-green); }
+
+  /* ---------- Layout ---------- */
+  .layout {
+    max-width: 980px; margin: 0 auto; padding: 48px 24px 96px;
+    display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 780px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    position: sticky; top: 76px;
+    font-size: 13.5px;
+  }
+  .toc-label {
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--ink-faint); font-size: 11.5px; margin-bottom: 12px;
+  }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .toc a {
+    display: block; padding: 7px 10px; border-radius: 7px; color: var(--ink-soft);
+    text-decoration: none; border-left: 2px solid transparent;
+  }
+  .toc a:hover { background: var(--panel); color: var(--ink); }
+  .toc a.active {
+    color: var(--ink); font-weight: 600; background: var(--panel);
+    border-left-color: var(--tally);
+  }
+  @media (max-width: 780px) {
+    .toc { position: static; margin-bottom: 8px; }
+    .toc ol { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .toc a { border: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .toc a.active { border-color: var(--tally); }
+  }
+
+  /* ---------- Content ---------- */
+  .content { min-width: 0; }
+  .summary-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 22px; margin-bottom: 40px; font-size: 15.5px; color: var(--ink-soft);
+  }
+  .summary-card strong { color: var(--ink); }
+
+  section.pp { margin-bottom: 40px; scroll-margin-top: 84px; }
+  section.pp h2 {
+    font-size: 20px; font-weight: 750; margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  section.pp h2 .num {
+    font-size: 12px; font-weight: 700; color: var(--ink-faint);
+    border: 1px solid var(--line); border-radius: 6px; width: 24px; height: 24px;
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+  }
+  section.pp p, section.pp li { color: var(--ink-soft); font-size: 15.5px; }
+  section.pp ul { padding-left: 20px; margin: 10px 0; }
+  section.pp li { margin-bottom: 6px; }
+  section.pp strong { color: var(--ink); }
+
+  code {
+    background: var(--panel); border: 1px solid var(--line);
+    padding: 1px 6px; border-radius: 5px; font-size: 0.88em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  table.perm { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14.5px; }
+  table.perm th, table.perm td {
+    text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  table.perm th { color: var(--ink-faint); font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  table.perm td:first-child { white-space: nowrap; }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 4px; }
+  .badge {
+    font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--ink-soft);
+  }
+  .badge svg { width: 14px; height: 14px; }
+  .badge.ok { color: #0a7a45; border-color: #cdebd9; background: #f0faf4; }
+
+  .contact-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 14px 28px;
+  }
+  .contact-item { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+  .contact-item svg { width: 17px; height: 17px; color: var(--ink-faint); flex: none; }
+  .copy-btn {
+    border: 1px solid var(--line); background: var(--paper); border-radius: 6px;
+    padding: 3px 9px; font-size: 12px; cursor: pointer; color: var(--ink-soft);
+    font-family: inherit;
+  }
+  .copy-btn:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .copy-btn.copied { color: #0a7a45; border-color: #cdebd9; }
+
+  footer.pp-footer {
+    border-top: 1px solid var(--line); margin-top: 8px; padding: 28px 24px 40px;
+  }
+  .footer-inner {
+    max-width: 980px; margin: 0 auto; display: flex; flex-wrap: wrap;
+    justify-content: space-between; gap: 12px; font-size: 13px; color: var(--ink-faint);
+  }
+
+  .back-to-top {
+    position: fixed; right: 22px; bottom: 22px; z-index: 30;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--studio-black); color: #fff; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  }
+  .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .back-to-top svg { width: 18px; height: 18px; }
+
+  @media print {
+    .topbar, .back-to-top, .toc { display: none; }
+    .hero { background: none; color: #000; padding: 0 0 24px; }
+    .hero::before { display: none; }
+    .layout { grid-template-columns: 1fr; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#39FF88" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 7 4-14 2 7h6"/></svg>
+      </span>
+      <span class="brand-word">STUDIO<b>PULSE</b></span>
+    </a>
+    <span class="topbar-tag">Privacy Policy</span>
+  </div>
+</header>
+
+<div id="top"></div>
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="rec-dot"></span> Privacy Policy</div>
+    <h1>Your data stays on your device.</h1>
+    <p class="lead">StudioPulse is a Chrome extension for YouTube creators. This page explains, in plain terms, exactly what the extension does and does not do with your data.</p>
+    <div class="hero-meta">
+      <span><span class="dot"></span> Last updated: 2026</span>
+      <span><span class="dot"></span> Applies to: StudioPulse — Creator Analytics</span>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="layout">
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-label">On this page</div>
+    <ol>
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#data-collected">Data collected</a></li>
+      <li><a href="#link-analysis">Analyze-by-link</a></li>
+      <li><a href="#permissions">Permissions</a></li>
+      <li><a href="#tracking">Tracking &amp; ads</a></li>
+      <li><a href="#deletion">Data deletion</a></li>
+      <li><a href="#changes">Policy changes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </nav>
+
+  <div class="content">
+
+    <div class="summary-card" id="summary">
+      <strong>In one sentence:</strong> StudioPulse never sends your data anywhere — every calculation happens locally in your browser, and nothing is collected, transmitted, sold, or shared with any third party.
+    </div>
+
+    <div class="badge-row">
+      <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg> No external server</span>
+      <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg> No account required</span>
+      <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg> No tracking or ads</span>
+      <span class="badge ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg> No AI / backend API</span>
+    </div>
+
+    <section class="pp" id="data-collected">
+      <h2><span class="num">1</span> What data is collected?</h2>
+      <p>StudioPulse reads publicly visible content on the YouTube page you're viewing — such as the video's title, description, comments, and thumbnail — in order to compute analytics like the Video Score, engagement rate, and title/description recommendations. This processing happens entirely inside your browser.</p>
+      <p>The following is stored <strong>only on your own device</strong>, using Chrome's local <code>chrome.storage.local</code> API:</p>
+      <ul>
+        <li>Panel settings (theme, compact mode, panel side, auto-open, etc.)</li>
+        <li>A short history of recently analyzed videos (title, score, date)</li>
+      </ul>
+      <p>None of this data is ever transmitted to the developer, to any third-party server, or to any analytics or advertising service. There is no account system, and no data is associated with your identity.</p>
+    </section>
+
+    <section class="pp" id="link-analysis">
+      <h2><span class="num">2</span> The "Analyze by link" feature</h2>
+      <p>When you manually paste a YouTube link and click "Analyze link," the extension sends a request <strong>only</strong> to that specific YouTube URL you entered, in order to read its page content. This request goes directly to <code>youtube.com</code> — no intermediary or third-party server is ever involved. Outside of this explicit, user-initiated action, the extension makes no other automatic external requests.</p>
+    </section>
+
+    <section class="pp" id="permissions">
+      <h2><span class="num">3</span> Why each permission is needed</h2>
+      <table class="perm">
+        <tr><th>Permission</th><th>Purpose</th></tr>
+        <tr>
+          <td><code>storage</code></td>
+          <td>Stores your settings and history locally, on your own device.</td>
+        </tr>
+        <tr>
+          <td><code>activeTab</code></td>
+          <td>Reads the current YouTube tab's URL and sends it a message when you click "Open panel" in the popup, or when you submit a link to analyze.</td>
+        </tr>
+        <tr>
+          <td><code>host_permissions</code><br>(youtube.com, i.ytimg.com)</td>
+          <td>Allows the extension to read text/numbers on the video page and load the video's thumbnail. No data is ever sent outside these domains.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="pp" id="tracking">
+      <h2><span class="num">4</span> Analytics, ads &amp; tracking</h2>
+      <ul>
+        <li>No Google Analytics, Meta Pixel, or any similar tracking code is included.</li>
+        <li>No advertisements are shown anywhere in the extension.</li>
+        <li>No AI model or backend API is called — all analysis is computed with plain JavaScript logic, directly in your browser.</li>
+      </ul>
+    </section>
+
+    <section class="pp" id="deletion">
+      <h2><span class="num">5</span> Data deletion</h2>
+      <p>Removing the extension from Chrome automatically deletes everything stored in <code>chrome.storage.local</code> — your settings and history disappear immediately, since no server-side copy ever existed.</p>
+      <p>You can also clear your history at any time from within the extension's popup, using the "Clear history" button, without uninstalling it.</p>
+    </section>
+
+    <section class="pp" id="changes">
+      <h2><span class="num">6</span> Changes to this policy</h2>
+      <p>If this policy is ever updated, the "Last updated" date at the top of this page will change accordingly. Since StudioPulse does not collect contact information from users, we're unable to notify you directly — please check back here periodically if you'd like to stay informed.</p>
+    </section>
+
+    <section class="pp" id="contact">
+      <h2><span class="num">7</span> Contact</h2>
+      <p>Questions about this policy or the extension are welcome:</p>
+      <div class="contact-card">
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6 12 13 2 6"/><path d="M2 6h20v12H2z"/></svg>
+          <span id="email-text">nurlanmammadli2@gmail.com</span>
+          <button class="copy-btn" id="copy-email" type="button">Copy</button>
+        </div>
+        <div class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          <a href="https://www.instagram.com/nurlan.mmdli/" target="_blank" rel="noopener">@nurlan.mmdli</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="pp-footer">
+  <div class="footer-inner">
+    <span>StudioPulse — Creator Analytics</span>
+    <span>Independent third-party tool. Not affiliated with Google or YouTube.</span>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function () {
+  // Active TOC highlighting on scroll
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.pp'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var linkFor = {};
+  links.forEach(function (l) { linkFor[l.getAttribute('href').slice(1)] = l; });
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = linkFor[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function (s) { observer.observe(s); });
+  }
+
+  // Back-to-top button
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('show', window.scrollY > 480);
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Copy email to clipboard
+  var copyBtn = document.getElementById('copy-email');
+  var emailText = document.getElementById('email-text').textContent.trim();
+  copyBtn.addEventListener('click', function () {
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.add('copied');
+      setTimeout(function () {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(emailText).then(done, done);
+    } else {
+      done();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
